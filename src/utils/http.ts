@@ -44,8 +44,34 @@ export const http = <T>(options: UniApp.RequestOptions) => {
     uni.request({
       ...options,
       success: (res) => {
-        //断言判断类型
-        resolve(res.data as Data<T>)
+        //由于没有axios需要自己处理不同的状态码
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          //断言判断类型
+          resolve(res.data as Data<T>)
+        } else if (res.statusCode === 401) {
+          //401错误 -> 清理用户信息，跳转登录页
+          const memberStore = useMemberStore()
+          memberStore.clearProfile()
+          uni.navigateTo({ url: '/pages/login/login' })
+          //标记失败
+          reject(res)
+        } else {
+          //其他错误 -> 根据后端错误信息
+          uni.showToast({
+            title: (res.data as Data<T>).msg || '请求错误',
+            icon: 'none',
+          })
+          //标记失败
+          reject(res)
+        }
+      },
+      //响应失败
+      fail(err) {
+        uni.showToast({
+          title: '网络错误，换个网络试试',
+          icon: 'none',
+        })
+        reject(err)
       },
     })
   })
