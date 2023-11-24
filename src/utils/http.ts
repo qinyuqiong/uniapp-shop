@@ -32,3 +32,21 @@ const httpInterceptor = {
 
 uni.addInterceptor('request', httpInterceptor)
 uni.addInterceptor('uploadFile', httpInterceptor)
+
+//设置返回类型
+interface Data<T> {
+  code: string
+  msg: string
+  result: T
+}
+export const http = <T>(options: UniApp.RequestOptions) => {
+  return new Promise<Data<T>>((resolve, reject) => {
+    uni.request({
+      ...options,
+      success: (res) => {
+        //断言判断类型
+        resolve(res.data as Data<T>)
+      },
+    })
+  })
+}
