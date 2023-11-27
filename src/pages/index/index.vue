@@ -3,7 +3,7 @@
 import XtxSwiper from '@/components/XtxSwiper.vue'
 import CustomNavbar from './components/CustomNavbar.vue'
 import CategoryPanel from './components/CategoryPanel.vue'
-import { getHomeBannerApi } from '@/services/home'
+import { getHomeBannerApi, getHomeCategoryMutliApi } from '@/services/home'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import type { BannerItem } from '@/types/home'
@@ -15,9 +15,15 @@ const getHomeBanner = async () => {
   // console.log(res)
   bannerList.value = res.result
 }
+
+const getHomeCategoryMutli = async () => {
+  const res = await getHomeCategoryMutliApi()
+}
+
 //启动时调用
 onLoad(() => {
   getHomeBanner()
+  getHomeCategoryMutli()
 })
 </script>
 
