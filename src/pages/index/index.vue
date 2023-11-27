@@ -32,9 +32,13 @@ onLoad(() => {
 </script>
 
 <template>
+  <!-- 自定义导航栏 -->
   <CustomNavbar />
+  <!-- 自定义轮播图 -->
   <XtxSwiper :list="bannerList" />
+  <!-- 分类面板 -->
   <CategoryPanel :list="categoryList" />
+  <!-- 热门推荐 -->
   <view class="index">index</view>
 </template>
 
