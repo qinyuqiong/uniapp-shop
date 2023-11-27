@@ -4,6 +4,7 @@
     "custom": {
       // uni-ui 规则如下配置
       "^uni-(.*)": "@dcloudio/uni-ui/lib/uni-$1/uni-$1.vue",
+      //引入以Xtx开头的组件
       "^Xtx(.*)": "@/components/Xtx$1.vue"
     }
   },
