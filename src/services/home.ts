@@ -1,6 +1,6 @@
 // 服务端请求调用放在service中
 
-import type { BannerItem } from '@/types/home'
+import type { BannerItem, CategoryItem, HotItem } from '@/types/home'
 import { http } from '@/utils/http'
 
 /**
@@ -17,9 +17,24 @@ export const getHomeBannerApi = (distributionSite = 1) => {
   })
 }
 
+/**
+ * 首页-前台分类-小程序
+ * @returns  数据集合
+ */
 export const getHomeCategoryMutliApi = () => {
   return http<CategoryItem[]>({
     method: 'GET',
     url: '/home/category/mutli',
+  })
+}
+
+/**
+ * 首页-热门推荐-小程序
+ * @returns 数据集合
+ */
+export const getHomeHotMutliApi = () => {
+  return http<HotItem[]>({
+    method: 'GET',
+    url: '/home/hot/mutli',
   })
 }

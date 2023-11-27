@@ -23,3 +23,20 @@ export type CategoryItem = {
   /** 分类名称 */
   name: string
 }
+
+/**
+ * 热门推荐
+ */
+export type HotItem = {
+  id: string
+  //推荐说明
+  alt: string
+  //图片集合
+  pictures: string[]
+  //跳转地址
+  target: string
+  //推荐标题
+  title: string
+  //推荐类型
+  type: string
+}
