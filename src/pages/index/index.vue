@@ -2,6 +2,7 @@
 //
 import XtxSwiper from '@/components/XtxSwiper.vue'
 import CustomNavbar from './components/CustomNavbar.vue'
+import CategoryPanel from './components/CategoryPanel.vue'
 import { getHomeBannerApi } from '@/services/home'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
@@ -23,9 +24,13 @@ onLoad(() => {
 <template>
   <CustomNavbar />
   <XtxSwiper :list="bannerList" />
+  <CategoryPanel />
   <view class="index">index</view>
 </template>
 
 <style lang="scss">
-//
+//调整页面底色
+page {
+  background-color: #f7f7f7;
+}
 </style>
