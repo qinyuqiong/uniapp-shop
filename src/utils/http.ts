@@ -4,7 +4,7 @@ const baseUrl = 'https://pcapi-xiaotuxian-front-devtest.itheima.net'
 
 const httpInterceptor = {
   invoke(options: UniApp.RequestOptions) {
-    console.log('拦截器')
+    // console.log('拦截器')
 
     //非http开头需要拼接地址
     if (!options.url.startsWith('http')) {
@@ -20,13 +20,13 @@ const httpInterceptor = {
     //添加token 请求头标识
     const memberStore = useMemberStore()
     //如果用户信息被清理getToken可能拿不到，所以加个？
-    console.log(memberStore)
+    // console.log(memberStore)
 
     const token = memberStore.profile?.token
     if (token) {
       options.header.Authorization = token
     }
-    console.log(options)
+    // console.log(options)
   },
 }
 
