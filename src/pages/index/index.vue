@@ -6,7 +6,7 @@ import CategoryPanel from './components/CategoryPanel.vue'
 import { getHomeBannerApi, getHomeCategoryMutliApi } from '@/services/home'
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
-import type { BannerItem } from '@/types/home'
+import type { BannerItem, CategoryItem } from '@/types/home'
 
 const bannerList = ref<BannerItem[]>([])
 
@@ -16,8 +16,12 @@ const getHomeBanner = async () => {
   bannerList.value = res.result
 }
 
+// eslint-disable-next-line no-undef
+const categoryList = ref<CategoryItem[]>([])
+
 const getHomeCategoryMutli = async () => {
   const res = await getHomeCategoryMutliApi()
+  categoryList.value = res.result
 }
 
 //启动时调用
@@ -30,7 +34,7 @@ onLoad(() => {
 <template>
   <CustomNavbar />
   <XtxSwiper :list="bannerList" />
-  <CategoryPanel />
+  <CategoryPanel :list="categoryList" />
   <view class="index">index</view>
 </template>
 

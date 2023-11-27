@@ -18,7 +18,7 @@ export const getHomeBannerApi = (distributionSite = 1) => {
 }
 
 export const getHomeCategoryMutliApi = () => {
-  return http({
+  return http<CategoryItem[]>({
     method: 'GET',
     url: '/home/category/mutli',
   })
