@@ -38,3 +38,10 @@ export const getHomeHotMutliApi = () => {
     url: '/home/hot/mutli',
   })
 }
+
+export const getHomeGoodsGuessLikeApi = () => {
+  return http({
+    method: 'GET',
+    url: '/home/goods/guessLike',
+  })
+}
