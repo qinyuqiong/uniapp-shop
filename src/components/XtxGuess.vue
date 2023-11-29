@@ -5,13 +5,18 @@ import { onMounted, ref } from 'vue'
 
 const guessList = ref<GuessItem[]>([])
 //获取猜你喜欢数据
-const getHomeGoodsGuessLike = async () => {
+const getHomeGoodsGuessLikeData = async () => {
   const res = await getHomeGoodsGuessLikeApi()
   guessList.value = res.result.items
 }
 //组件挂载完毕后调用
 onMounted(() => {
-  getHomeGoodsGuessLike()
+  getHomeGoodsGuessLikeData()
+})
+//暴露方法
+defineExpose({
+  //重命名为getMore
+  getMore: getHomeGoodsGuessLikeData,
 })
 </script>
 

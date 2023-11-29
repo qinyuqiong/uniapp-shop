@@ -8,8 +8,14 @@ import { getHomeBannerApi, getHomeCategoryMutliApi, getHomeHotMutliApi } from '@
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import type { BannerItem, CategoryItem, HotItem } from '@/types/home'
+import type { XtxGuessInstance } from '@/types/component'
 
 const bannerList = ref<BannerItem[]>([])
+// eslint-disable-next-line no-undef
+const categoryList = ref<CategoryItem[]>([])
+const hotList = ref<HotItem[]>([])
+//获取猜你喜欢组件实例
+const guessRef = ref<XtxGuessInstance>()
 
 const getHomeBanner = async () => {
   const res = await getHomeBannerApi()
@@ -17,19 +23,21 @@ const getHomeBanner = async () => {
   bannerList.value = res.result
 }
 
-// eslint-disable-next-line no-undef
-const categoryList = ref<CategoryItem[]>([])
-
 const getHomeCategoryMutli = async () => {
   const res = await getHomeCategoryMutliApi()
   categoryList.value = res.result
 }
 
-const hotList = ref<HotItem[]>([])
-
 const getHomeHotMutli = async () => {
   const res = await getHomeHotMutliApi()
   hotList.value = res.result
+}
+
+//滚动触底
+const onScrolltolower = () => {
+  // console.log('滚动触底')
+  //调用实例中的方法
+  guessRef.value?.getMore()
 }
 //启动时调用
 onLoad(() => {
@@ -42,15 +50,15 @@ onLoad(() => {
 <template>
   <!-- 自定义导航栏 -->
   <CustomNavbar />
-  <scroll-view class="scroll-view" scroll-y>
+  <scroll-view @scrolltolower="onScrolltolower" class="scroll-view" scroll-y>
     <!-- 自定义轮播图 -->
     <XtxSwiper :list="bannerList" />
     <!-- 分类面板 -->
     <CategoryPanel :list="categoryList" />
     <!-- 热门推荐 -->
-    <HotPanel :list="hotList"></HotPanel>
+    <HotPanel :list="hotList" />
     <!-- 猜你喜欢 -->
-    <XtxGuess></XtxGuess>
+    <XtxGuess ref="guessRef" />
     <view class="index">index</view>
   </scroll-view>
 </template>
