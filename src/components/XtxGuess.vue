@@ -15,7 +15,7 @@ onMounted(() => {
 })
 //暴露方法
 defineExpose({
-  //重命名为getMore
+  //将暴露的方法重命名为getMore
   getMore: getHomeGoodsGuessLikeData,
 })
 </script>
