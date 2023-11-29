@@ -39,13 +39,21 @@ const onScrolltolower = () => {
   //调用实例中的方法
   guessRef.value?.getMore()
 }
+
 const isTrigger = ref(false)
 //自定义下拉刷新被触发
 const onRefresherrefresh = async () => {
   //开始动画
   isTrigger.value = true
+  //重置猜你喜欢
+  guessRef.value?.resetData()
   //加载数据,异步（await）同时请求（Promise.all）三个方法
-  await Promise.all([getHomeBanner(), getHomeCategoryMutli(), getHomeHotMutli()])
+  await Promise.all([
+    getHomeBanner(),
+    getHomeCategoryMutli(),
+    getHomeHotMutli(),
+    guessRef.value?.getMore(),
+  ])
   //结束动画
   isTrigger.value = false
 }
