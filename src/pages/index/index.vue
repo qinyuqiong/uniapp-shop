@@ -9,6 +9,7 @@ import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import type { BannerItem, CategoryItem, HotItem } from '@/types/home'
 import type { XtxGuessInstance } from '@/types/component'
+import PageSkeleton from './components/PageSkeleton.vue'
 
 const bannerList = ref<BannerItem[]>([])
 // eslint-disable-next-line no-undef
@@ -58,11 +59,12 @@ const onRefresherrefresh = async () => {
   isTrigger.value = false
 }
 
+const isLoading = ref(false)
 //启动时调用
-onLoad(() => {
-  getHomeBanner()
-  getHomeCategoryMutli()
-  getHomeHotMutli()
+onLoad(async () => {
+  isLoading.value = true
+  await Promise.all([getHomeBanner(), getHomeCategoryMutli(), getHomeHotMutli()])
+  isLoading.value = false
 })
 </script>
 
@@ -77,15 +79,19 @@ onLoad(() => {
     class="scroll-view"
     scroll-y
   >
-    <!-- 自定义轮播图 -->
-    <XtxSwiper :list="bannerList" />
-    <!-- 分类面板 -->
-    <CategoryPanel :list="categoryList" />
-    <!-- 热门推荐 -->
-    <HotPanel :list="hotList" />
-    <!-- 猜你喜欢 -->
-    <XtxGuess ref="guessRef" />
-    <view class="index">index</view>
+    <!-- 骨架屏 -->
+    <PageSkeleton v-if="isLoading" />
+    <template v-else>
+      <!-- 自定义轮播图 -->
+      <XtxSwiper :list="bannerList" />
+      <!-- 分类面板 -->
+      <CategoryPanel :list="categoryList" />
+      <!-- 热门推荐 -->
+      <HotPanel :list="hotList" />
+      <!-- 猜你喜欢 -->
+      <XtxGuess ref="guessRef" />
+      <view class="index">index</view>
+    </template>
   </scroll-view>
 </template>
 
