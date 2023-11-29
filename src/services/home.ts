@@ -1,6 +1,6 @@
 // 服务端请求调用放在service中
 
-import type { PageResult } from '@/types/global'
+import type { PageParams, PageResult } from '@/types/global'
 import type { BannerItem, CategoryItem, GuessItem, HotItem } from '@/types/home'
 import { http } from '@/utils/http'
 
@@ -39,10 +39,15 @@ export const getHomeHotMutliApi = () => {
     url: '/home/hot/mutli',
   })
 }
-
-export const getHomeGoodsGuessLikeApi = () => {
+/**
+ * 猜你喜欢
+ * @param data 分页查询(可选)
+ * @returns 返回分页结果
+ */
+export const getHomeGoodsGuessLikeApi = (data?: PageParams) => {
   return http<PageResult<GuessItem>>({
     method: 'GET',
     url: '/home/goods/guessLike',
+    data: data,
   })
 }
