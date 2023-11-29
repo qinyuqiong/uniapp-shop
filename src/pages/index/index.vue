@@ -39,6 +39,17 @@ const onScrolltolower = () => {
   //调用实例中的方法
   guessRef.value?.getMore()
 }
+const isTrigger = ref(false)
+//自定义下拉刷新被触发
+const onRefresherrefresh = async () => {
+  //开始动画
+  isTrigger.value = true
+  //加载数据,异步（await）同时请求（Promise.all）三个方法
+  await Promise.all([getHomeBanner(), getHomeCategoryMutli(), getHomeHotMutli()])
+  //结束动画
+  isTrigger.value = false
+}
+
 //启动时调用
 onLoad(() => {
   getHomeBanner()
@@ -50,7 +61,14 @@ onLoad(() => {
 <template>
   <!-- 自定义导航栏 -->
   <CustomNavbar />
-  <scroll-view @scrolltolower="onScrolltolower" class="scroll-view" scroll-y>
+  <scroll-view
+    refresher-enabled
+    @refresherrefresh="onRefresherrefresh"
+    :refresher-triggered="isTrigger"
+    @scrolltolower="onScrolltolower"
+    class="scroll-view"
+    scroll-y
+  >
     <!-- 自定义轮播图 -->
     <XtxSwiper :list="bannerList" />
     <!-- 分类面板 -->
