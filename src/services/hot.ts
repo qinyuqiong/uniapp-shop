@@ -3,7 +3,7 @@ import type { HotResult } from '@/types/hot'
 import { http } from '@/utils/http'
 
 //交叉参数。将{}内的拓展到PageParams中
-type HotParams = PageParams & { subType: string }
+type HotParams = PageParams & { subType?: string }
 /**
  * 获取热门推荐
  * @param url 后端路径

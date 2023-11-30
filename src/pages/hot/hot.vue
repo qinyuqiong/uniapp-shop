@@ -29,7 +29,7 @@ const activeIndex = ref(0)
 //推荐封面图
 const bannerPicture = ref('')
 //推荐选项
-const subTypes = ref<SubTypeItem[]>([])
+const subTypes = ref<(SubTypeItem & { finish?: boolean })[]>([])
 //获取热门推荐数据
 const getHotRecommendData = async () => {
   const res = await getHotRecommendApi(currUrlMap!.url)
@@ -42,8 +42,15 @@ const getHotRecommendData = async () => {
 const onScrolltolower = async () => {
   //获取当前选项
   const currsubTypes = subTypes.value[activeIndex.value]
-  //当前页码累加
-  currsubTypes.goodsItems.page++
+  //分页条件
+  if (currsubTypes.goodsItems.page < currsubTypes.goodsItems.pages) {
+    //当前页码累加
+    currsubTypes.goodsItems.page++
+  } else {
+    currsubTypes.finish = true
+    return uni.showToast({ title: '没有更多了', icon: 'none' })
+  }
+
   //调用API传参
   const res = await getHotRecommendApi(currUrlMap!.url, {
     subType: currsubTypes.id,
@@ -103,7 +110,7 @@ onLoad(() => {
           </view>
         </navigator>
       </view>
-      <view class="loading-text">正在加载...</view>
+      <view class="loading-text">{{ item.finish ? '已经到底啦..' : '正在加载...' }}</view>
     </scroll-view>
   </view>
 </template>
