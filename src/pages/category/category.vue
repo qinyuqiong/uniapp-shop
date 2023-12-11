@@ -36,7 +36,7 @@ onLoad(() => {
       <!-- 右侧：二级分类 -->
       <scroll-view class="secondary" scroll-y>
         <!-- 焦点图 -->
-        <XtxSwiper class="banner" :list="[]" />
+        <XtxSwiper class="banner" :list="bannerList" />
         <!-- 内容区域 -->
         <view class="panel" v-for="item in 3" :key="item">
           <view class="title">
