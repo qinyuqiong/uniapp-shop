@@ -8,15 +8,16 @@ import { getHomeBannerApi, getHomeCategoryMutliApi, getHomeHotMutliApi } from '@
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import type { BannerItem, CategoryItem, HotItem } from '@/types/home'
-import type { XtxGuessInstance } from '@/types/component'
 import PageSkeleton from './components/PageSkeleton.vue'
+import { useGuessList } from '@/composables'
 
 const bannerList = ref<BannerItem[]>([])
 // eslint-disable-next-line no-undef
 const categoryList = ref<CategoryItem[]>([])
 const hotList = ref<HotItem[]>([])
 //获取猜你喜欢组件实例
-const guessRef = ref<XtxGuessInstance>()
+// const guessRef = ref<XtxGuessInstance>()
+const { guessRef, onScrolltolower } = useGuessList()
 
 const getHomeBanner = async () => {
   const res = await getHomeBannerApi()
@@ -35,11 +36,11 @@ const getHomeHotMutli = async () => {
 }
 
 //滚动触底
-const onScrolltolower = () => {
-  // console.log('滚动触底')
-  //调用实例中的方法
-  guessRef.value?.getMore()
-}
+// const onScrolltolower = () => {
+//   // console.log('滚动触底')
+//   //调用实例中的方法
+//   guessRef.value?.getMore()
+// }
 
 const isTrigger = ref(false)
 //自定义下拉刷新被触发
