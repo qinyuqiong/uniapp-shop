@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ProfileDetail } from '@/types/member'
+import type { Gender, ProfileDetail } from '@/types/member'
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { getMemberProfileApi, putMemberProfileApi } from '@/services/profile'
@@ -45,10 +45,15 @@ const onAvatarChange = () => {
     },
   })
 }
+//修改性别
+const onGenderChange: UniHelper.RadioGroupOnChange = (ev) => {
+  profile.value.gender = ev.detail.value as Gender
+}
 //点击保存提交表单
 const onSumbit = async () => {
   const res = await putMemberProfileApi({
     nickname: profile.value!.nickname,
+    gender: profile.value!.gender,
   })
   //更新Store中的昵称
   userMemberStore.profile.nickname = res.result.nickname
@@ -91,7 +96,7 @@ onLoad(() => {
         </view>
         <view class="form-item">
           <text class="label">性别</text>
-          <radio-group>
+          <radio-group @change="onGenderChange">
             <label class="radio">
               <radio value="男" color="#27ba9b" :checked="profile?.gender === '男'" />
               男
