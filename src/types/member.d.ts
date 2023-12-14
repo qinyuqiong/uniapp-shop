@@ -37,6 +37,7 @@ export type ProfileParams = Pick<
   ProfileDetail,
   'nickname' | 'gender' | 'birthday' | 'profession'
 > & {
+  provinceCode?: string
   cityCode?: string
   countyCode?: string
 }
