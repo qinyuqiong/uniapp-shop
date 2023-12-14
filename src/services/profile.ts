@@ -10,7 +10,7 @@ export const getMemberProfileApi = () => {
 
 //修改个人信息
 export const putMemberProfileApi = (data: ProfileParams) => {
-  return http({
+  return http<ProfileDetail>({
     method: 'PUT',
     url: '/member/profile',
     data,
