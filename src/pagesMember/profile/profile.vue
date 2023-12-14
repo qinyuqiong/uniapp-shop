@@ -49,11 +49,16 @@ const onAvatarChange = () => {
 const onGenderChange: UniHelper.RadioGroupOnChange = (ev) => {
   profile.value.gender = ev.detail.value as Gender
 }
+//修改生日
+const onbirthdayChange: UniHelper.DatePickerOnChange = (ev) => {
+  profile.value.birthday = ev.detail.value
+}
 //点击保存提交表单
 const onSumbit = async () => {
   const res = await putMemberProfileApi({
     nickname: profile.value!.nickname,
     gender: profile.value!.gender,
+    birthday: profile.value!.birthday,
   })
   //更新Store中的昵称
   userMemberStore.profile.nickname = res.result.nickname
@@ -110,6 +115,7 @@ onLoad(() => {
         <view class="form-item">
           <text class="label">生日</text>
           <picker
+            @change="onbirthdayChange"
             class="picker"
             mode="date"
             start="1900-01-01"
