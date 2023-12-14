@@ -32,3 +32,11 @@ export type ProfileDetail = BaseProfile & {
 }
 /** 性别 */
 export type Gender = '女' | '男'
+
+export type ProfileParams = Pick<
+  ProfileDetail,
+  'nickname' | 'gender' | 'birthday' | 'profession'
+> & {
+  cityCode?: string
+  countyCode?: string
+}

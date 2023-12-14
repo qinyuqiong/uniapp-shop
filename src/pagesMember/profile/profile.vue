@@ -2,13 +2,13 @@
 import type { ProfileDetail } from '@/types/member'
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
-import { getMemberProfileApi } from '@/services/profile'
+import { getMemberProfileApi, putMemberProfileApi } from '@/services/profile'
 
 // 获取屏幕边界到安全区域距离
 const { safeAreaInsets } = uni.getSystemInfoSync()
 
-// 获取会员信息
-const profile = ref<ProfileDetail>()
+// 获取会员信息，因为后面需要修改所以增加一个空初始值并断言
+const profile = ref({} as ProfileDetail)
 const getMemberProfileData = async () => {
   const res = await getMemberProfileApi()
   profile.value = res.result
@@ -41,6 +41,13 @@ const onAvatarChange = () => {
     },
   })
 }
+//点击保存提交表单
+const onSumbit = () => {
+  putMemberProfileApi({
+    nickname: profile.value!.nickname,
+  })
+  uni.showToast({ icon: 'success', title: '保存成功' })
+}
 onLoad(() => {
   getMemberProfileData()
 })
@@ -70,7 +77,7 @@ onLoad(() => {
         </view>
         <view class="form-item">
           <text class="label">昵称</text>
-          <input class="input" type="text" placeholder="请填写昵称" :value="profile?.nickname" />
+          <input class="input" type="text" placeholder="请填写昵称" v-model="profile!.nickname" />
         </view>
         <view class="form-item">
           <text class="label">性别</text>
@@ -111,7 +118,7 @@ onLoad(() => {
         </view>
       </view>
       <!-- 提交按钮 -->
-      <button class="form-button">保 存</button>
+      <button @tap="onSumbit" class="form-button">保 存</button>
     </view>
   </view>
 </template>
