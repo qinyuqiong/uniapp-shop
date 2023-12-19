@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { getMemberAddressByIdAPI, postMemberAddressAPI } from '@/services/address'
+import {
+  getMemberAddressByIdAPI,
+  postMemberAddressAPI,
+  putMemberAddressByIdAPI,
+} from '@/services/address'
 import { ref } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 
@@ -46,10 +50,15 @@ const onSwitchChange: UniHelper.SwitchOnChange = (ev) => {
 }
 
 const onSubmit = async () => {
-  await postMemberAddressAPI(form.value)
+  if (query.id) {
+    await putMemberAddressByIdAPI(query.id, form.value)
+  } else {
+    await postMemberAddressAPI(form.value)
+  }
+
   uni.showToast({
     icon: 'success',
-    title: '保存成功',
+    title: query.id ? '保存成功' : '修改成功',
   })
   setTimeout(() => uni.navigateBack(), 400)
 }
