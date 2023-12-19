@@ -34,7 +34,7 @@ onShow(() => {
               <navigator
                 class="edit"
                 hover-class="none"
-                :url="`/pagesMember/address-form/address-form?id=1`"
+                :url="`/pagesMember/address-form/address-form?id=${item.id}`"
               >
                 修改
               </navigator>
